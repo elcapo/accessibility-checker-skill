@@ -1,4 +1,4 @@
-# AI Accessibility Skills
+# Accessibility Skills
 
 A collection of AI agent skills for accessibility reviews of office documents.
 
@@ -13,8 +13,10 @@ Analyzes documents and generates accessibility reports.
 - Generates detailed JSON and human-readable reports
 - Highlights issues with severity levels (critical, major, minor, suggestion)
 
-**Input:** Document (.docx, .doc, .pdf, .odt)
-**Output:** `accessibility-report.json` + human-readable summary
+| **Type** | **Document** |
+| --- | --- |
+| **Input** | Document (.docx, .doc, .pdf, .odt) |
+| **Output** | `accessibility-report.json` + human-readable summary |
 
 ### 2. Create Accessible Revision (`skills/create-accessible-revision`)
 Generates improved, accessible versions of documents.
@@ -25,8 +27,10 @@ Generates improved, accessible versions of documents.
 - Preserves original content and intent
 - Produces a WCAG-compliant version
 
-**Input:** Document (+ optional accessibility report)
-**Output:** Revised document + revision summary
+| **Type** | **Document** |
+| --- | --- |
+| **Input** | Document (+ optional accessibility report) |
+| **Output** | Revised document + revision summary |
 
 ### 3. Create Cognitive Revision (`skills/create-cognitive-revision`)
 Analyzes and simplifies document content for cognitive accessibility.
@@ -37,8 +41,10 @@ Analyzes and simplifies document content for cognitive accessibility.
 - Reviews language complexity (readability scores)
 - Generates a cognitively accessible version
 
-**Input:** Document (+ optional target audience)
-**Output:** Simplified document + cognitive report + glossary
+| **Type** | **Document** |
+| --- | --- |
+| **Input** | Document (+ optional target audience) |
+| **Output** | Simplified document + cognitive report + glossary |
 
 ## Quick Start
 
