@@ -1,0 +1,55 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://accessibility-skills.com/schemas/revision-request.json",
+  "title": "Revision Request",
+  "description": "Input schema for document revision requests",
+  "type": "object",
+  "required": ["document", "accessibilityReport"],
+  "properties": {
+    "document": {
+      "type": "object",
+      "required": ["filename", "type", "content"],
+      "properties": {
+        "filename": { "type": "string" },
+        "type": {
+          "type": "string",
+          "enum": ["pdf", "docx", "doc", "odt"]
+        },
+        "content": {
+          "oneOf": [
+            { "type": "string", "description": "Base64-encoded file" },
+            { "type": "string", "description": "File path" },
+            { "type": "string", "description": "URL to download" }
+          ]
+        }
+      }
+    },
+    "accessibilityReport": {
+      "type": "object",
+      "description": "The accessibility report containing issues to fix",
+      "$ref": "accessibility-report.json"
+    },
+    "revisionOptions": {
+      "type": "object",
+      "properties": {
+        "fixSeverity": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": ["critical", "major", "minor", "suggestion"]
+          },
+          "default": ["critical", "major", "minor"],
+          "description": "Which severity levels to fix"
+        },
+        "preserveFormatting": {
+          "type": "boolean",
+          "default": true
+        },
+        "generateReport": {
+          "type": "boolean",
+          "default": true
+        }
+      }
+    }
+  }
+}

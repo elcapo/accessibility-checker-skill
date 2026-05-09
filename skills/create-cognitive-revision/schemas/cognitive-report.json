@@ -1,0 +1,116 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://accessibility-skills.com/schemas/cognitive-report.json",
+  "title": "Cognitive Accessibility Report",
+  "description": "Output schema for cognitive accessibility analysis reports",
+  "type": "object",
+  "required": ["document", "analysis", "metrics", "simplification"],
+  "properties": {
+    "document": {
+      "type": "object",
+      "required": ["filename", "targetAudience", "processedAt"],
+      "properties": {
+        "filename": { "type": "string" },
+        "targetAudience": { "type": "string" },
+        "processedAt": { "type": "string", "format": "date-time" }
+      }
+    },
+    "analysis": {
+      "type": "object",
+      "properties": {
+        "readabilityMetrics": {
+          "type": "object",
+          "properties": {
+            "fleschReadingEase": { "type": "number" },
+            "fleschKincaidGrade": { "type": "number" },
+            "avgSentenceLength": { "type": "number" },
+            "avgWordLength": { "type": "number" },
+            "avgSyllablesPerWord": { "type": "number" },
+            "paragraphCount": { "type": "integer" }
+          }
+        },
+        "complexityIndicators": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "long-sentence", "complex-word", "passive-voice",
+                  "jargon", "idiom", "acronym", "abstract-concept",
+                  "double-negative", "implicit-inference", "dense-text"
+                ]
+              },
+              "location": { "type": "string" },
+              "original": { "type": "string" },
+              "suggestion": { "type": "string" },
+              "impact": { "type": "string", "enum": ["high", "medium", "low"] }
+            }
+          }
+        },
+        "strengths": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "metrics": {
+      "type": "object",
+      "properties": {
+        "cognitiveScore": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "complexityLevel": {
+          "type": "string",
+          "enum": ["very-simple", "simple", "moderate", "complex", "very-complex"]
+        },
+        "estimatedReadTimeOriginal": { "type": "number", "description": "Minutes" },
+        "estimatedReadTimeSimplified": { "type": "number", "description": "Minutes" },
+        "improvementTarget": { "type": "string", "enum": ["achieved", "partial", "not-achieved"] }
+      }
+    },
+    "simplification": {
+      "type": "object",
+      "properties": {
+        "techniqueSummary": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "technique": { "type": "string" },
+              "occurrences": { "type": "integer" },
+              "example": { "type": "string" }
+            }
+          }
+        },
+        "termsSimplified": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "original": { "type": "string" },
+              "simplified": { "type": "string" },
+              "occurrences": { "type": "integer" }
+            }
+          }
+        },
+        "sectionsAdded": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "qualityChecks": {
+      "type": "object",
+      "properties": {
+        "informationPreserved": { "type": "boolean" },
+        "readabilityImproved": { "type": "boolean" },
+        "structureEnhanced": { "type": "boolean" },
+        "glossaryIncluded": { "type": "boolean" }
+      }
+    }
+  }
+}

@@ -1,0 +1,59 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://accessibility-skills.com/schemas/cognitive-analysis.json",
+  "title": "Cognitive Analysis",
+  "description": "Input schema for cognitive accessibility analysis",
+  "type": "object",
+  "required": ["document", "targetAudience"],
+  "properties": {
+    "document": {
+      "type": "object",
+      "required": ["filename", "type", "content"],
+      "properties": {
+        "filename": { "type": "string" },
+        "type": {
+          "type": "string",
+          "enum": ["pdf", "docx", "doc", "odt", "md", "txt", "html"]
+        },
+        "content": {
+          "oneOf": [
+            { "type": "string", "description": "Base64-encoded file" },
+            { "type": "string", "description": "File path" },
+            { "type": "string", "description": "Direct text content" }
+          ]
+        }
+      }
+    },
+    "targetAudience": {
+      "type": "object",
+      "required": ["readingLevel", "description"],
+      "properties": {
+        "readingLevel": {
+          "type": "string",
+          "description": "Target grade level (e.g., '6th grade', '8th grade')"
+        },
+        "description": { "type": "string" },
+        "cognitiveProfiles": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": ["dyslexia", "adhd", "autism", "low-literacy", "non-native-speaker", "general"]
+          }
+        },
+        "priorKnowledge": {
+          "type": "string",
+          "enum": ["none", "basic", "intermediate", "expert"]
+        }
+      }
+    },
+    "analysisOptions": {
+      "type": "object",
+      "properties": {
+        "includeReadabilityMetrics": { "type": "boolean", "default": true },
+        "includeComplexityIndicators": { "type": "boolean", "default": true },
+        "includeRecommendations": { "type": "boolean", "default": true },
+        "generateSimplifiedVersion": { "type": "boolean", "default": false }
+      }
+    }
+  }
+}

@@ -1,0 +1,98 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://accessibility-skills.com/schemas/accessibility-report.json",
+  "title": "Accessibility Report",
+  "description": "Output schema for document accessibility analysis reports",
+  "type": "object",
+  "required": ["document", "summary", "issues"],
+  "properties": {
+    "document": {
+      "type": "object",
+      "required": ["filename", "type", "processedAt"],
+      "properties": {
+        "filename": { "type": "string" },
+        "type": { "type": "string", "enum": ["pdf", "docx", "doc", "odt"] },
+        "pageCount": { "type": "integer", "minimum": 1 },
+        "wordCount": { "type": "integer", "minimum": 0 },
+        "processedAt": { "type": "string", "format": "date-time" },
+        "ocrApplied": { "type": "boolean", "default": false },
+        "ocrNotes": { "type": "string" }
+      }
+    },
+    "summary": {
+      "type": "object",
+      "required": ["totalIssues", "wcagScore"],
+      "properties": {
+        "totalIssues": { "type": "integer", "minimum": 0 },
+        "critical": { "type": "integer", "minimum": 0 },
+        "major": { "type": "integer", "minimum": 0 },
+        "minor": { "type": "integer", "minimum": 0 },
+        "suggestions": { "type": "integer", "minimum": 0 },
+        "wcagScore": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100,
+          "description": "Accessibility score from 0-100"
+        },
+        "wcagLevel": {
+          "type": "string",
+          "enum": ["A", "AA", "AAA", "Non-compliant"],
+          "description": "Highest WCAG level the document achieves"
+        }
+      }
+    },
+    "issues": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "severity", "wcagCriterion", "category", "description"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[A-Z]+-\\d{3}$",
+            "description": "Issue ID in format CATEGORY-### (e.g., IMG-001)"
+          },
+          "severity": {
+            "type": "string",
+            "enum": ["critical", "major", "minor", "suggestion"]
+          },
+          "wcagCriterion": {
+            "type": "string",
+            "description": "WCAG criterion code and name (e.g., '1.1.1 Non-text Content')"
+          },
+          "wcagPrinciple": {
+            "type": "string",
+            "enum": ["Perceivable", "Operable", "Understandable", "Robust"]
+          },
+          "category": {
+            "type": "string",
+            "enum": [
+              "images", "structure", "links", "tables", "forms",
+              "color", "navigation", "language", "headings", "lists",
+              "metadata", "contrast", "alt-text", "reading-order"
+            ]
+          },
+          "location": { "type": "string", "description": "Where the issue occurs (page, section, element)" },
+          "description": { "type": "string", "description": "What the issue is" },
+          "originalContent": { "type": "string", "description": "The problematic content" },
+          "suggestedFix": { "type": "string", "description": "How to fix the issue" },
+          "estimatedEffort": {
+            "type": "string",
+            "enum": ["low", "medium", "high"],
+            "description": "Estimated effort to fix"
+          }
+        }
+      }
+    },
+    "passedChecks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "wcagCriterion": { "type": "string" },
+          "description": { "type": "string" }
+        }
+      }
+    }
+  }
+}
