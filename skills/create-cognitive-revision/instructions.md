@@ -148,3 +148,9 @@ Verify the simplified version:
 - Consistent terminology
 - Avoid idioms
 - Clear examples
+
+## Output Language
+
+**Default:** Detect the document's language automatically and generate the report and simplified version in that same language.
+
+**Custom Language:** If a `reportLanguage` parameter is specified, generate all output in that language instead.

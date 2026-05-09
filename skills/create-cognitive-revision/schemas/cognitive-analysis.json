@@ -52,7 +52,11 @@
         "includeReadabilityMetrics": { "type": "boolean", "default": true },
         "includeComplexityIndicators": { "type": "boolean", "default": true },
         "includeRecommendations": { "type": "boolean", "default": true },
-        "generateSimplifiedVersion": { "type": "boolean", "default": false }
+        "generateSimplifiedVersion": { "type": "boolean", "default": false },
+        "reportLanguage": {
+          "type": "string",
+          "description": "Language for the output report (ISO 639-1). Defaults to document language if not specified."
+        }
       }
     }
   }

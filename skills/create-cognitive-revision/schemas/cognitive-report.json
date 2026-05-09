@@ -12,7 +12,14 @@
       "properties": {
         "filename": { "type": "string" },
         "targetAudience": { "type": "string" },
-        "processedAt": { "type": "string", "format": "date-time" }
+        "documentLanguage": {
+          "type": "string",
+          "description": "Detected language of the source document (ISO 639-1 code)"
+        },
+        "reportLanguage": {
+          "type": "string",
+          "description": "Language of this report (defaults to documentLanguage, ISO 639-1 code)"
+        }
       }
     },
     "analysis": {

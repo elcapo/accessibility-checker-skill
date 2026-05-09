@@ -1,4 +1,4 @@
-# Accessibility Checker Skill
+# Analyze Accessibility Skill
 
 Use this skill when: You need to analyze a document (.docx, .doc, .pdf, .odt) for accessibility issues and generate a comprehensive report.
 
@@ -131,12 +131,22 @@ For each table, check:
 - Is the table purpose clear?
 - Does it have a caption?
 
+## Output Language
+
+**Default:** Detect the document's language automatically and generate the report in that same language.
+
+**Custom Language:** If a `reportLanguage` parameter is specified, generate the report in that language instead.
+
+Supported languages: English, Spanish, French, German, Portuguese, Italian, Dutch, Chinese, Japanese, Korean, Arabic, and others supported by standard encoding.
+
 ## Output Requirements
 
 Always provide:
 1. The JSON report (save to `accessibility-report.json`)
 2. The human-readable summary (can be displayed or saved to `accessibility-summary.md`)
 3. A list of suggested fixes ordered by priority
+
+All text content in the report must match the detected document language (or the specified `reportLanguage` if provided).
 
 ## Limitations
 
