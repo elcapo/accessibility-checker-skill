@@ -87,27 +87,37 @@ Schemas are based on WCAG 2.1 guidelines and include:
 ## Skill Relationships
 
 ```mermaid
-flowchart LR
-    Doc[Document<br/>.docx .pdf .odt]
+flowchart TB
 
-    Doc --> A[analyze-accessibility]
-    Doc --> B[create-accessible-revision]
-    Doc --> C[create-cognitive-revision]
+subgraph s1["analyze-accessibility"]
+    A1["Analyze document"]
+    A2["Accessibility report"]
+end
 
-    A --> Report[accessibility-report]
-    
-    B -->|Mode A<br/>auto-analyze| Report
-    B -->|Mode B<br/>report-based| Report
-    
-    C -->|Mode A<br/>auto-detect| Level[Target Level]
-    C -->|Mode B<br/>specified| Level
+subgraph s2["create-accessible-revision"]
+    B1["Apply accessibility fixes"]
+    B2["Revised document"]
+end
 
-    Report -.->|can feed into| B
-    Level -.->|guides| C
+subgraph s3["create-cognitive-revision"]
+    C1["Apply cognitive improvements"]
+    C2["Output simplified document"]
+end
 
-    A{Generate Report}
-    B{Fix Issues}
-    C{Simplify Content}
+A1 --> A2
+B1 --> B2
+C1 --> C2
+Doc@{ label: "Document<br><span style=\"color: gray\">.docx .pdf .odt</span>" } --> s1 & s2 & s3
+A2 -- "accessibility-report" --> s2
+
+A2@{ shape: doc}
+B2@{ shape: doc}
+C2@{ shape: doc}
+Doc@{ shape: rect}
+
+style A2 fill:#90EE90
+style B2 fill:#90EE90
+style C2 fill:#90EE90
 ```
 
 ## Contributing
