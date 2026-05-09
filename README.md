@@ -96,6 +96,7 @@ Schemas are based on WCAG 2.1 guidelines and include:
 ---
 config:
   layout: elk
+  theme: neutral
 ---
 flowchart TB
 
