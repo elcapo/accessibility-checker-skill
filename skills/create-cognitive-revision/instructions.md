@@ -1,27 +1,42 @@
 # Create Cognitive Revision Skill
 
-Use this skill when: You need to analyze document complexity and generate a simplified, cognitively accessible version.
+Use this skill when: You need to generate a simplified, cognitively accessible version of a document.
 
 ## Role Definition
 
-You are an expert in cognitive accessibility and clear communication. Your task is to analyze document complexity and create versions that are easier to understand for people with cognitive disabilities, dyslexia, ADHD, autism, or those with lower literacy levels.
+You are an expert in cognitive accessibility and clear communication. Your task is to create simplified versions of documents that are easier to understand for people with cognitive disabilities, dyslexia, ADHD, autism, or those with lower literacy levels.
 
 ## Input Modes
 
 This skill supports **two input modes**:
 
 ### Mode A: Document Only (Automatic)
-Provide a document without explicit target audience. The skill will:
+Provide a document without an existing report. The skill will:
 1. Analyze the document complexity
 2. Determine an appropriate target reading level (default: 8th grade)
 3. Generate a cognitively accessible version
 4. Output both the simplified document and analysis report
 
-### Mode B: Document + Target Audience
-Provide both a document and target audience specifications. The skill will:
+### Mode B: Document + Accessibility Report
+Provide a document with an existing `accessibility-report.json`. The skill will:
+1. Extract the cognitive analysis from the report
+2. Use the existing complexity metrics and indicators
+3. Generate a targeted simplified version
+4. Output the simplified document and revision summary
+
+### Mode C: Document + Target Audience
+Provide a document and explicit target audience specifications. The skill will:
 1. Analyze the document against the specified audience needs
 2. Generate a tailored simplified version
 3. Output the simplified document and targeted recommendations
+
+## Input Modes Summary
+
+| Mode | Input | When to Use |
+|------|-------|-------------|
+| A | Document only | Quick analysis, default target audience |
+| B | Document + accessibility-report | Reuse existing analysis (from `analyze-accessibility`) |
+| C | Document + target audience | Specific audience requirements |
 
 ## Target Audience Parameters
 
@@ -32,12 +47,25 @@ When providing target audience, specify:
 
 ## Workflow
 
-### Step 1: Define Parameters
+### Step 1: Accept Input
 
-Mode A: Infer appropriate complexity level
-Mode B: Review specified audience requirements
+Identify the input mode:
+- **Mode A**: Only document provided → perform full cognitive analysis
+- **Mode B**: Document + accessibility report → extract cognitive data from report
+- **Mode C**: Document + target audience → analyze against specific requirements
 
-### Step 2: Analyze Current Document
+### Step 2: Process Input
+
+**Mode A:** Perform full cognitive analysis (see Analyze Current Document below)
+
+**Mode B:** Extract from the accessibility report:
+- Readability metrics (fleschReadingEase, fleschKincaidGrade, etc.)
+- Complexity indicators (long sentences, jargon, etc.)
+- Document language
+
+**Mode C:** Review specified audience requirements, then analyze document
+
+### Step 3: Analyze Current Document (Modes A and C)
 
 #### A. Readability Metrics
 Calculate or estimate:
@@ -62,7 +90,9 @@ Check for:
 - Lack of visual hierarchy
 - Missing summaries or key points
 
-### Step 3: Generate Analysis Report
+### Step 4: Generate Analysis Report (Mode A and C only)
+
+When using Mode B, skip this step and use the extracted data from the report.
 
 ```json
 {
@@ -85,7 +115,7 @@ Check for:
 }
 ```
 
-### Step 4: Generate Simplified Version
+### Step 5: Generate Simplified Version
 
 Apply these techniques:
 
@@ -113,7 +143,7 @@ Apply these techniques:
 - Highlighted key terms
 - Warning boxes for critical info
 
-### Step 5: Quality Check
+### Step 6: Quality Check
 
 Verify the simplified version:
 1. Readability score improved by at least 20 points

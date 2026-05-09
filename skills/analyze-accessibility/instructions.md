@@ -1,10 +1,10 @@
 # Analyze Accessibility Skill
 
-Use this skill when: You need to analyze a document (.docx, .doc, .pdf, .odt) for accessibility issues and generate a comprehensive report.
+Use this skill when: You need to analyze a document (.docx, .doc, .pdf, .odt) for accessibility issues and generate a comprehensive report covering both WCAG compliance and cognitive accessibility.
 
 ## Role Definition
 
-You are an expert accessibility analyst specializing in WCAG 2.1 guidelines. Your task is to thoroughly examine documents and produce detailed, actionable reports.
+You are an expert accessibility analyst specializing in WCAG 2.1 guidelines and cognitive accessibility standards. Your task is to thoroughly examine documents and produce detailed, actionable reports covering technical accessibility and readability.
 
 ## Workflow
 
@@ -53,7 +53,28 @@ Apply these checks based on WCAG 2.1 principles:
 - Are styles used consistently?
 - Is the document compatible with assistive technologies?
 
-### Step 4: Severity Classification
+### Step 4: Cognitive Accessibility Analysis
+
+Assess readability and cognitive accessibility:
+
+#### Readability Metrics
+- **Flesch Reading Ease** (target: 60-70 for general audiences)
+- **Flesch-Kincaid Grade Level** (target: 6th-8th grade)
+- **Average sentence length** (target: 15-20 words)
+- **Average word length** (prefer shorter words)
+
+#### Complexity Indicators
+Identify:
+- **Long sentences** (40+ words)
+- **Complex words** (3+ syllables, jargon)
+- **Passive voice** overuse
+- **Abstract concepts** without examples
+- **Double negatives**
+- **Idioms and metaphors**
+- **Acronyms** without definitions
+- **Dense text blocks** without breaks
+
+### Step 5: Severity Classification
 
 Rate each issue:
 - **CRITICAL**: Prevents any user from accessing content
@@ -61,7 +82,7 @@ Rate each issue:
 - **MINOR**: Minor inconvenience, workaround exists
 - **SUGGESTION**: Best practice improvement
 
-### Step 5: Generate Report
+### Step 6: Generate Report
 
 Output TWO formats:
 
@@ -72,7 +93,9 @@ Output TWO formats:
     "filename": "document.pdf",
     "type": "pdf",
     "pageCount": 5,
-    "processedAt": "2026-05-09T12:00:00Z"
+    "processedAt": "2026-05-09T12:00:00Z",
+    "documentLanguage": "en",
+    "reportLanguage": "en"
   },
   "summary": {
     "totalIssues": 12,
@@ -80,35 +103,57 @@ Output TWO formats:
     "major": 4,
     "minor": 5,
     "suggestions": 2,
-    "wcagScore": 65
+    "wcagScore": 65,
+    "cognitiveScore": 45,
+    "complexityLevel": "complex"
   },
-  "issues": [
-    {
-      "id": "IMG-001",
-      "severity": "critical",
-      "wcagCriterion": "1.1.1 Non-text Content",
-      "category": "images",
-      "location": "Page 3, Image 2",
-      "description": "Image lacks alternative text",
-      "originalContent": "business_chart.png",
-      "suggestedFix": "Add alt='Sales chart showing 40% growth in Q3 2024'"
-    }
-  ],
-  "passedChecks": [
-    {
-      "wcagCriterion": "1.3.1 Info and Relationships",
-      "description": "Document uses proper heading hierarchy"
-    }
-  ]
+  "wcag": {
+    "issues": [
+      {
+        "id": "IMG-001",
+        "severity": "critical",
+        "wcagCriterion": "1.1.1 Non-text Content",
+        "category": "images",
+        "location": "Page 3, Image 2",
+        "description": "Image lacks alternative text",
+        "originalContent": "business_chart.png",
+        "suggestedFix": "Add alt='Sales chart showing 40% growth in Q3 2024'"
+      }
+    ],
+    "passedChecks": [
+      {
+        "wcagCriterion": "1.3.1 Info and Relationships",
+        "description": "Document uses proper heading hierarchy"
+      }
+    ]
+  },
+  "cognitive": {
+    "readabilityMetrics": {
+      "fleschReadingEase": 35,
+      "fleschKincaidGrade": 12,
+      "avgSentenceLength": 28,
+      "avgWordLength": 6.2
+    },
+    "complexityIndicators": [
+      {
+        "type": "long-sentence",
+        "location": "Section 3, Paragraph 2",
+        "original": "The application shall be deemed incomplete if...",
+        "suggestion": "Break into shorter sentences"
+      }
+    ]
+  }
 }
 ```
 
 #### B. Human-Readable Summary
 Provide a clear summary that includes:
 - Executive overview (1 paragraph)
-- Top 3 critical issues with immediate action items
-- Priority fix list
-- Overall accessibility score with interpretation
+- Top 3 critical WCAG issues with immediate action items
+- WCAG accessibility score with interpretation
+- Cognitive accessibility overview (readability score, complexity level)
+- Top 3 cognitive complexity issues
+- Priority fix list for both WCAG and cognitive issues
 
 ## Special Handling
 

@@ -1,0 +1,73 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://accessibility-skills.com/schemas/cognitive-revision-request.json",
+  "title": "Cognitive Revision Request",
+  "description": "Input schema for cognitive revision requests",
+  "type": "object",
+  "required": ["document"],
+  "properties": {
+    "document": {
+      "type": "object",
+      "required": ["filename", "type", "content"],
+      "properties": {
+        "filename": { "type": "string" },
+        "type": {
+          "type": "string",
+          "enum": ["pdf", "docx", "doc", "odt", "md", "txt", "html"]
+        },
+        "content": {
+          "oneOf": [
+            { "type": "string", "description": "Base64-encoded file" },
+            { "type": "string", "description": "File path" },
+            { "type": "string", "description": "URL to download" },
+            { "type": "string", "description": "Direct text content" }
+          ]
+        }
+      }
+    },
+    "accessibilityReport": {
+      "type": "object",
+      "description": "Optional pre-existing accessibility report (enables Mode B)",
+      "$ref": "accessibility-report.json"
+    },
+    "targetAudience": {
+      "type": "object",
+      "description": "Optional target audience specifications (enables Mode C)",
+      "properties": {
+        "readingLevel": {
+          "type": "string",
+          "description": "Target grade level (e.g., '6th grade', '8th grade')"
+        },
+        "description": { "type": "string" },
+        "cognitiveProfiles": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": ["dyslexia", "adhd", "autism", "low-literacy", "non-native-speaker", "general"]
+          }
+        },
+        "priorKnowledge": {
+          "type": "string",
+          "enum": ["none", "basic", "intermediate", "expert"]
+        }
+      }
+    },
+    "revisionOptions": {
+      "type": "object",
+      "properties": {
+        "reportLanguage": {
+          "type": "string",
+          "description": "Language for output report (ISO 639-1). Defaults to document language."
+        },
+        "preserveFormatting": {
+          "type": "boolean",
+          "default": true
+        },
+        "generateGlossary": {
+          "type": "boolean",
+          "default": true
+        }
+      }
+    }
+  }
+}
